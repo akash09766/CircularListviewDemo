@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_view_id"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.MainActivity">
+
+    <ImageView
+        android:layout_width="@dimen/watch_face_size"
+        android:layout_height="@dimen/watch_face_size"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_watch_black_02" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/circle">
+
+        <skylightdeveloper.com.circularlistviewdemo.customui.CircularListView
+            android:id="@+id/circularListView"
+            android:layout_width="@dimen/list_view_width_height"
+            android:layout_height="@dimen/list_view_width_height"
+            android:divider="@null"
+            android:overScrollMode="never" />
+
+    </RelativeLayout>
+
+    // Experimental views
+  <!--  <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_centerVertical="true"
+        android:background="@color/colorAccent"
+        android:visibility="gone" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorAccent"
+        android:visibility="gone" />-->
+</RelativeLayout>
