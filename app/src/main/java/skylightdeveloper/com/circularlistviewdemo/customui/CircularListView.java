@@ -51,7 +51,7 @@ public class CircularListView extends ListView implements AbsListView.OnScrollLi
 
         setOnScrollListener(this);
         setClipChildren(false);
-        setEnableInfiniteScrolling(true);
+//        setEnableInfiniteScrolling(true);
     }
 
     public void setAdapter(ListAdapter adapter) {/*
@@ -247,6 +247,7 @@ public class CircularListView extends ListView implements AbsListView.OnScrollLi
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
                          int totalItemCount) {
+
         if (!mEnableInfiniteScrolling) {
             return;
         }
@@ -265,7 +266,7 @@ public class CircularListView extends ListView implements AbsListView.OnScrollLi
             mItemHeight = itemView.getHeight();
         }
 
-        if (firstVisibleItem == 0) {
+        if (firstVisibleItem == 0) { // firstVisibleItem means the index of the first visible cell
             // scroll one unit
 //            this.setSelectionFromTop(realTotalItemCount, itemView.getTop());
         }
@@ -285,6 +286,7 @@ public class CircularListView extends ListView implements AbsListView.OnScrollLi
 
             double yRadius = (view.getHeight() + mItemHeight) / 2.0f;
             double xRadius = (vRadius < hRadius) ? vRadius : hRadius;
+
             if (mRadius > 0) {
                 xRadius = mRadius;
             }
@@ -292,15 +294,18 @@ public class CircularListView extends ListView implements AbsListView.OnScrollLi
             for (int i = 0; i < visibleItemCount; i++) {
                 itemView = this.getChildAt(i);
                 if (itemView != null) {
-                    double y = Math.abs(viewHalfHeight - (itemView.getTop() + (itemView.getHeight() / 2.0f)));
+                    double y = Math.abs(viewHalfHeight - (itemView.getTop() +
+                            (itemView.getHeight() / 2.0f)));
                     y = Math.min(y, yRadius);
                     double angle = Math.asin(y / yRadius);
                     double x = xRadius * Math.cos(angle);
 
-                    if (mCircularListViewContentAlignment == CircularListViewContentAlignment.Left) {
+                    if (mCircularListViewContentAlignment ==
+                            CircularListViewContentAlignment.Left) {
                         x -= xRadius;
                     } else {
-                        x = xRadius / 2 - x;
+                        x = xRadius / 1.8 - x;
+//                        x = xRadius / 2 - x;
                     }
                     itemView.scrollTo((int) x, 0);
                 }

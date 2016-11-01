@@ -14,6 +14,14 @@
         android:scaleType="centerCrop"
         android:src="@drawable/ic_watch_black_02" />
 
+    <skylightdeveloper.com.circularlistviewdemo.customui.CircularSeekBar
+        android:id="@+id/circularSeekBar__view_id"
+        android:layout_width="@dimen/radial_view_width_height"
+        android:layout_height="@dimen/radial_view_width_height"
+        android:layout_centerInParent="true"
+        app:circle_progress_color="@color/colorAccent"
+        app:progress="10" />
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,17 +38,18 @@
     </RelativeLayout>
 
     // Experimental views
-  <!--  <View
+<!--
+    <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_centerVertical="true"
         android:background="@color/colorAccent"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <View
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:background="@color/colorAccent"
-        android:visibility="gone" />-->
+        android:visibility="visible" />-->
 </RelativeLayout>

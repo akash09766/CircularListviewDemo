@@ -4,6 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="list_view_width_height">150dip</dimen>
+    <dimen name="radial_view_width_height">206dip</dimen>
 
     <dimen name="watch_face_size">300dp</dimen>
 </resources>

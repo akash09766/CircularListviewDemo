@@ -13,47 +13,55 @@ import android.widget.TextView;
 import skylightdeveloper.com.circularlistviewdemo.customui.CircularListView;
 import skylightdeveloper.com.circularlistviewdemo.constants.CircularListViewContentAlignment;
 import skylightdeveloper.com.circularlistviewdemo.R;
+import skylightdeveloper.com.circularlistviewdemo.customui.CircularSeekBar;
 import skylightdeveloper.com.circularlistviewdemo.listeners.CircularListViewListener;
 import skylightdeveloper.com.circularlistviewdemo.listeners.OnScrollStopped;
 
-public class MainActivity extends AppCompatActivity implements OnScrollStopped, CircularListViewListener {
+public class MainActivity extends AppCompatActivity implements OnScrollStopped,
+        CircularListViewListener, CircularSeekBar.OnCircularSeekBarChangeListener {
 
     private CircularListView mCircularListView;
     private boolean mIsAdapterDirty = true;
     private String TAG = MainActivity.class.getSimpleName();
     private Display display;
+    private CircularSeekBar mCircularSeekBar;
+    private int startProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mCircularListView = (CircularListView) findViewById(R.id.circularListView);
-
+        setIdsToViews();
         setAdapterToListView();
         setListenerToListView();
+    }
+
+    private void setIdsToViews() {
+        mCircularListView = (CircularListView) findViewById(R.id.circularListView);
+        mCircularSeekBar = (CircularSeekBar) findViewById(R.id.circularSeekBar__view_id);
     }
 
     private void setListenerToListView() {
         mCircularListView.setOnScrollStoppedListener(this);
         mCircularListView.setCircularListViewListener(this);
+        mCircularSeekBar.setOnSeekBarChangeListener(this);
     }
 
     private void setAdapterToListView() {
         ArrayAdapter<String> listAdapter = new
                 ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
-        for (int i = 0; i < 10; i++) {
-            if(i == 0){
+        for (int i = 0; i < 20; i++) {
+            if (i == 0) {
                 listAdapter.add("");
-            }else{
-                listAdapter.add(String.format("Item %02d", i-1));
+            } else {
+                listAdapter.add(String.format("Item %02d", i - 1));
             }
         }
 
         display = getWindowManager().getDefaultDisplay();
-        mCircularListView.setRadius(Math.min(400, display.getWidth() / 2));
+//        mCircularListView.setRadius(Math.min(400, display.getWidth() / 2));
         mCircularListView.setAdapter(listAdapter);
-        mCircularListView.setOnScrollStoppedListener(this);
     }
 
     void refreshCircular() {
@@ -99,8 +107,8 @@ public class MainActivity extends AppCompatActivity implements OnScrollStopped, 
     @Override
     public void onFingurePulled(int position) {
 
-        Log.d(TAG, "onFingurePulled: pos = "+(position-1));
-        mCircularListView.setSelection((position-1));
+        Log.d(TAG, "onFingurePulled: pos = " + (position - 1));
+        mCircularListView.setSelection((position - 1));
 //        mCircularListView.smoothScrollToPosition(position,1000);
 /*
         TextView centerView = (TextView) mCircularListView.getCentralChild();
@@ -115,5 +123,29 @@ public class MainActivity extends AppCompatActivity implements OnScrollStopped, 
     @Override
     public void onCircularLayoutFinished(CircularListView circularListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         refreshCircular();
+    }
+
+    @Override
+    public void onProgressChanged(CircularSeekBar circularSeekBar, int progress, boolean fromUser) {
+        Log.d(TAG, "onProgressChanged: progress = " + progress);
+//        Log.d(TAG, "onProgressChanged: "+circularSeekBar.getProgress());
+        int offset = (startProgress - progress)/2;
+        Log.d(TAG, "onProgressChanged: offset = " + offset);
+        mCircularListView.smoothScrollByOffset(offset);
+
+//        mCircularListView.smoothScrollBy(offset,80);
+    }
+
+    @Override
+    public void onStopTrackingTouch(CircularSeekBar seekBar) {
+
+        Log.d(TAG, "onStopTrackingTouch: progress " + seekBar.getProgress());
+    }
+
+    @Override
+    public void onStartTrackingTouch(CircularSeekBar seekBar) {
+        Log.d(TAG, "onStartTrackingTouch: progress " + seekBar.getProgress());
+
+        startProgress = seekBar.getProgress();
     }
 }
